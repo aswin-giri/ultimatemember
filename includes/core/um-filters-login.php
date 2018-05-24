@@ -168,3 +168,17 @@ function um_lostpassword_url( $lostpassword_url ) {
 }
 add_filter( 'lostpassword_url',  'um_lostpassword_url', 10, 1 );
 
+/**
+ * Replace login page URL to UM login page
+ * @param string $login_url
+ * @param string $redirect
+ * @return string
+ */
+function um_login_url( $login_url, $redirect ){
+    $page_id = UM()->options()->get( 'core_login' );
+    if ( get_post( $page_id ) ) {
+        $login_url = add_query_arg( 'redirect_to', urlencode( $redirect ), get_permalink( $page_id ) );
+    }
+    return $login_url;
+}
+add_filter('login_url', 'um_login_url', 10, 2);
