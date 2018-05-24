@@ -124,6 +124,10 @@ if ( ! class_exists( 'um\core\Mail' ) ) {
 
 			$this->message = $this->prepare_template( $template, $args );
 
+            if ( preg_match( '/<\/[a-z]+>/i', $this->message ) ) {
+                $this->headers .= "content-type: text/html\r\n";
+            }
+
 			add_filter( 'wp_mail_content_type', array( &$this, 'set_content_type' ) );
 			// Send mail
 			wp_mail( $email, $this->subject, $this->message, $this->headers, $this->attachments );
