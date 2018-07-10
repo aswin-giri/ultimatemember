@@ -3505,7 +3505,9 @@ if ( ! class_exists( 'um\core\Fields' ) ) {
 			// get whole field data
 			if (is_array( $data )) {
 				$data = $this->get_field( $key );
-				extract( $data );
+				if (is_array( $data )) {
+					extract( $data );
+				}
 			}
 
 			if (!isset( $data['type'] )) return;
